@@ -5,7 +5,7 @@ locals {
 }
 #create vpc module
 module "vpc" {
-  source                       = "git@github.com:TerrenceDevOps/Terraform-Modules.git"
+  source                       = "git@github.com:TerrenceDevOps/Terraform-Modules.git//vpc"
   region                       = local.region
   project_name                 = local.project_name
   environment                  = local.environment
@@ -55,4 +55,13 @@ availability_zone_1 = module.vpc.availability_zone_1
 database_instance_identifier = var.database_instance_identifier
 multi_az_deployment = var.multi_az_deployment
 database_security_group_id = module.security_groups.database_security_group_id
+}
+#create acm
+module "acm" {
+source = "git@github.com:TerrenceDevOps/Terraform-Modules.git//acm"
+project_name=local.project_name
+environment=local.environment
+domain_name = var.domain_name
+alternative_names  = var.alternative_names
+
 }

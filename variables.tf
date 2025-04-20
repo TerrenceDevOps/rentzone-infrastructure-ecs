@@ -23,3 +23,6 @@ variable "database_instance_identifier" {}
 variable "multi_az_deployment" {}
 
 
+#acm variables
+variable "domain_name" {}
+variable "alternative_names" {}
