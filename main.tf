@@ -57,11 +57,23 @@ multi_az_deployment = var.multi_az_deployment
 database_security_group_id = module.security_groups.database_security_group_id
 }
 #create acm
-module "acm" {
+module "ssl_certificate" {
 source = "git@github.com:TerrenceDevOps/Terraform-Modules.git//acm"
 project_name=local.project_name
 environment=local.environment
 domain_name = var.domain_name
 alternative_names  = var.alternative_names
 
+}
+#create app load balancer
+module "alb" {
+source = "git@github.com:TerrenceDevOps/Terraform-Modules.git//alb"
+project_name = local.project_name
+environment = local.environment
+alb_security_group_id = module.alb.alb_security_group_id
+public_subnet_az1_id = module.vpc.private_app_subnet_az1_id
+public_subnet_az2_id = module.vpc.private_app_subnet_az2_id
+target_type = var.target_type
+vpc_id = module.vpc.vpc_id
+certificate_arn = module.ssl_certificate
 }

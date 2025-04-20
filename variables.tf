@@ -26,3 +26,6 @@ variable "multi_az_deployment" {}
 #acm variables
 variable "domain_name" {}
 variable "alternative_names" {}
+
+#create app load balancer
+variable " var.target_type" {}
